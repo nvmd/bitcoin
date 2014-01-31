@@ -51,6 +51,7 @@ static std::vector<SOCKET> vhListenSocket;
 CAddrMan addrman;
 int nMaxConnections = 125;
 int nMaxOutConnections = 8;
+int nNewConnRetryPeriod = 120000;
 
 vector<CNode*> vNodes;
 CCriticalSection cs_vNodes;
@@ -1485,7 +1486,7 @@ void ThreadOpenAddedConnections()
                 OpenNetworkConnection(addr, &grant, strAddNode.c_str());
                 MilliSleep(500);
             }
-            MilliSleep(120000); // Retry every 2 minutes
+            MilliSleep(nNewConnRetryPeriod); // Retry every `nNewConnRetryPeriod`
         }
     }
 
@@ -1532,7 +1533,7 @@ void ThreadOpenAddedConnections()
             OpenNetworkConnection(CAddress(vserv[i % vserv.size()]), &grant);
             MilliSleep(500);
         }
-        MilliSleep(120000); // Retry every 2 minutes
+        MilliSleep(nNewConnRetryPeriod); // Retry every `nNewConnRetryPeriod`
     }
 }
 

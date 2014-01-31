@@ -298,6 +298,7 @@ std::string HelpMessage()
         "  -datadir=<dir>         " + _("Specify data directory") + "\n" +
         "  -dbcache=<n>           " + _("Set database cache size in megabytes (default: 25)") + "\n" +
         "  -timeout=<n>           " + _("Specify connection timeout in milliseconds (default: 5000)") + "\n" +
+        "  -newconnretry=<n>      " + _("Specify new connections retry period in milliseconds (default: 120000 (2 minutes)") + "\n" +
         "  -proxy=<ip:port>       " + _("Connect through socks proxy") + "\n" +
         "  -socks=<n>             " + _("Select the version of socks proxy to use (4-5, default: 5)") + "\n" +
         "  -tor=<ip:port>         " + _("Use proxy to reach tor hidden services (default: same as -proxy)") + "\n"
@@ -581,6 +582,7 @@ bool AppInit2(boost::thread_group& threadGroup)
         if (nNewTimeout > 0 && nNewTimeout < 600000)
             nConnectTimeout = nNewTimeout;
     }
+    nNewConnRetryPeriod = GetArg("-newconnretry", 120000);
 
     // Continue to put "/P2SH/" in the coinbase to monitor
     // BIP16 support.

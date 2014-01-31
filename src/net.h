@@ -76,6 +76,7 @@ extern uint64 nLocalHostNonce;
 extern CAddrMan addrman;
 extern int nMaxConnections;
 extern int nMaxOutConnections;
+extern int nNewConnRetryPeriod;
 
 extern std::vector<CNode*> vNodes;
 extern CCriticalSection cs_vNodes;
